@@ -1,30 +1,27 @@
 import java.util.Scanner;
 import java.io.*;
-
 public class Main {
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        String fileName = "ogrenci.txt";
-        int secim;
-
+        String fileName = "student.txt";
+        int choice;
         do{
             System.out.println("\n1- Öğrenci Ekle");
             System.out.println("2- Öğrencileri Listele");
             System.out.println("3- Geçen/Kalan Ayır");
             System.out.println("4- Çıkış");
             System.out.print("Seçiminiz: ");
-            secim = scanner.nextInt();
-
-            if(secim == 1){
+            choice = scanner.nextInt();
+            if(choice == 1){
                 try{
                     FileWriter fw = new FileWriter(fileName,true);
                     PrintWriter pw = new PrintWriter(fw);
 
                     System.out.print("İsim: ");
-                    String isim = scanner.next();
+                    String name = scanner.next();
 
                     System.out.print("No: ");
-                    int no = scanner.nextInt();
+                    int num = scanner.nextInt();
 
                     System.out.print("Vize: ");
                     int vize = scanner.nextInt();
@@ -32,16 +29,14 @@ public class Main {
                     System.out.print("Final: ");
                     int fin = scanner.nextInt();
 
-                    pw.println(isim + " " + no + " " + vize + " " + fin);
+                    pw.println(name + " " + num + " " + vize + " " + fin);
                     pw.close();
-
                     System.out.println("Öğrenci eklendi.");
                 }catch(Exception e){
                     System.out.println("Dosya hatası!");
                 }
             }
-
-            else if(secim == 2){
+            else if(choice == 2){
                 try{
                     File file = new File(fileName);
                     Scanner reader = new Scanner(file);
@@ -54,47 +49,38 @@ public class Main {
                     System.out.println("Dosya okunamadı!");
                 }
             }
-
-            else if(secim == 3){
+            else if(choice == 3){
                 try{
                     Scanner reader = new Scanner(new File(fileName));
-                    PrintWriter gecen = new PrintWriter("gecen.txt");
-                    PrintWriter kalan = new PrintWriter("kalan.txt");
-
+                    PrintWriter pass = new PrintWriter("pass.txt");
+                    PrintWriter fail = new PrintWriter("fail.txt");
                     while(reader.hasNext()){
-                        String isim = reader.next();
-                        int no = reader.nextInt();
+                        String name = reader.next();
+                        int num = reader.nextInt();
                         int vize = reader.nextInt();
                         int fin = reader.nextInt();
                         double ort = vize*0.4 + fin*0.6;
-
                         if(ort >= 50){
-                            gecen.println(isim + " " + no + " " + vize + " " + fin);
+                            pass.println(name + " " + num + " " + vize + " " + fin);
                         }else{
-                            kalan.println(isim + " " + no + " " + vize + " " + fin);
+                            fail.println(name + " " + num + " " + vize + " " + fin);
                         }
                     }
-
                     reader.close();
-                    gecen.close();
-                    kalan.close();
+                    pass.close();
+                    fail.close();
                     System.out.println("Geçen ve kalan öğrenciler dosyaya yazıldı.");
-
                 }catch(Exception e){
                     System.out.println("Hata oluştu!");
                 }
             }
-
-            else if(secim == 4){
-                System.out.println("Çıkılıyor...");
+            else if(choice == 4){
+                System.out.println("Çıkılıyor");
             }
-
             else{
                 System.out.println("Hatalı seçim!");
             }
-
-        }while(secim != 4);
-
+        }while(choice != 4);
         scanner.close();
     }
 }
